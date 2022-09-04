@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url(https://i2.wp.com/telegra.ph/file/0f4069c197e3354c10d6d.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            margin: 0px;
+        }
+
+        /* * {
+            border: 1px solid black;
+        } */
+
+        #time {
+            display: flex;
+            justify-content: center;
+            font-size: 60px;
+            z-index: 2;
+            position: fixed;
+            color: rgb(106, 188, 188);
+            margin: auto;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .a {
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+
+        #textBox {
+            border: 0;
+            border-bottom: 2px solid rgb(157, 41, 41);
+            display: block;
+            text-align: center;
+            padding: 4px 2px;
+            /* 去掉边框 */
+            background: 0;
+            line-height: 1.5;
+            font-size: 2rem;
+            color: rgb(42, 47, 199);
+            max-width: 90%;
+        }
+
+        #button {
+            margin-left: -30px;
+            margin-right: 10px;
+            color: hotpink;
+            border-radius: 25%;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #447bc3;
+            font-size: 1.8rem;
+        }
+    </style>
+</head>
+
+<body onload="startTime()">
+    <div id="time">10:00:00</div>
+    <div class="a">
+        <input placeholder="今天你要做什么？" id="textBox" style="border-bottom-color:transparent;" readonly>
+        <span id="button" onclick="change()">×</span>
+        <script>
+            let admit = false;
+            function change() {
+                let button = document.getElementById("button");
+                let textBox = document.getElementById("textBox");
+
+                if (admit) {
+                    admit = false;
+                    button.innerText = "√";
+                    textBox.style.borderBottomColor = "#fff";
+                    textBox.value = "";
+                    textBox.readOnly = false;
+                    window.localStorage.removeItem("event");
+                }
+                else {
+                    admit = true;
+                    button.innerText = "×";
+                    textBox.style.borderBottomColor = "transparent";
+                    textBox.readOnly = true;
+                    window.localStorage.setItem("event", textBox.value);
+                }
+            }
+            function startTime() {
+                let today = new Date();
+                let h = today.getHours;
+                let m = today.getMinutes;
+                let s = today.getSeconds;
+                let time = document.getElementById("time");
+                h = check_time(h);
+                m = check_time(m);
+                s = check_time(s);
+                time.innerHTML = h + ":" + m + ":" + s;
+                t = setTimeout(function () {
+                    startTime, 500;
+                });
+            }
+            function check_time(i) {
+                if (i < 10) return "0" + i;
+                else { return i; }
+            }
+        </script>
+    </div>
+</body>
+
+</html>
